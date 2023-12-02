@@ -1,0 +1,13 @@
+SELECT * from superstore
+ORDER by price;
+
+SELECT Min(price) , category
+from superstore;
+
+SELECT SUM(price), category 
+from superstore
+WHERE category = "Kitchen Supplies";
+
+SELECT stock_quantity , item_name
+from superstore
+WHERE item_name = "Air Purifier";
