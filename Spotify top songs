@@ -1,0 +1,11 @@
+SELECT artist_name,track_name ,AVG(danceability) FROM Spotifydata
+GROUP by artist_name;
+
+SELECT artist_name,popularity FROM Spotifydata
+ORDER by popularity DESC LIMIT 10;
+
+SELECT artist_name,track_name,MAX(duration_ms) FROM Spotifydata;
+
+SELECT artist_name,track_name,popularity,AVG(danceability) FROM Spotifydata
+Group BY artist_name
+ORDER by popularity DESC LIMIT 10;
