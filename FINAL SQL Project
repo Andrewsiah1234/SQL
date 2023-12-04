@@ -1,0 +1,57 @@
+Select * FROM chinook.customers
+WHERE Country <> "USA";
+
+SELECT * FROM chinook.customers
+WHERE Country = "Brazil";
+
+SELECT c.FirstName,c.LastName,i.InvoiceID,i.InvoiceDate,i.BillingCountry FROM chinook.invoices as i
+JOIN chinook.customers as c
+ON i.CustomerID = c.CustomerID
+WHERE c.Country = "Brazil";
+
+SELECT * FROM chinook.employees
+WHERE Title = 'Sales Support Agent';
+
+SELECT DISTINCT BillingCountry FROM chinook.invoices;
+
+SELECT emp.Firstname,emp.Lastname , inv.InvoiceID FROM chinook.employees emp
+JOIN chinook.customers cust ON emp.EmployeeID=cust.SupportREPID
+JOIN chinook.invoices inv ON inv.CustomerId = cust.CustomerID;
+
+SELECT inv.total AS invoice_total,cust.Firstname AS cust_first_name,cust.Lastname AS cust_last_name,cust.Country,emp.Firstname AS sales_agent_first_name,emp.Lastname AS sales_agent_last_name FROM chinook.employees emp
+JOIN chinook.customers cust ON emp.EmployeeID=cust.SupportREPID
+JOIN chinook.invoices inv ON inv.CustomerId = cust.CustomerID;
+
+SELECT COUNT(*) from chinook.invoices
+WHERE InvoiceDate LIKE '%2009%';
+
+SELECT SUM(total) from chinook.invoices
+WHERE InvoiceDate LIKE '%2009%';
+
+SELECT t.Name , i.InvoiceLineID FROM chinook.invoice_items i
+JOIN chinook.tracks t ON i.TrackID = t.TrackID;
+
+SELECT t.Name AS track, a.Name AS Name, i.InvoiceLineID from chinook.artists a
+JOIN chinook.albums ab ON a.ArtistID = ab.ArtistID
+JOIN chinook.tracks t ON ab.AlbumID = t.AlbumID
+JOIN chinook.invoice_items i ON i.TrackID = t.TrackID;
+
+
+Select t.Name AS track, ab.Title As Album, m.Name AS MediaType, g.Name AS Genre FROM chinook.tracks t 
+JOIN chinook.albums ab ON t.AlbumID= ab.AlbumID
+JOIN chinook.media_types m ON t.MediaTypeID = m.MediaTypeID
+Join chinook.genres g on t.GenreID = g.GenreID;
+
+SELECT emp.Firstname,emp.Lastname ,emp.Title ,SUM(inv.total) FROM chinook.employees emp
+JOIN chinook.customers cust ON emp.EmployeeID=cust.SupportREPID
+JOIN chinook.invoices inv ON inv.CustomerId = cust.CustomerID
+Where emp.Title = 'Sales Support Agent'
+GROUP by emp.Firstname;
+
+
+SELECT emp.Firstname,emp.Lastname ,emp.Title ,ROUND(SUM(inv.total),2) FROM chinook.employees emp
+JOIN chinook.customers cust ON emp.EmployeeID=cust.SupportREPID
+JOIN chinook.invoices inv ON inv.CustomerId = cust.CustomerID
+Where emp.Title = 'Sales Support Agent' AND inv.InvoiceDate LIKE '%2009%'
+GROUP by emp.Firstname
+ORDER by ROUND(SUM(inv.total),2) DESC Limit 1;
